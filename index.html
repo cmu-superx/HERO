@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Taran IMU.">
+  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hierarchical Adaptation Enables Robust Odometry Towards All-degraded Environments</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<!-- <nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://keunhong.com">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a> -->
+
+      <!-- <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://hypernerf.github.io">
+            HyperNeRF
+          </a>
+          <a class="navbar-item" href="https://nerfies.github.io">
+            Nerfies
+          </a>
+          <a class="navbar-item" href="https://latentfusion.github.io">
+            LatentFusion
+          </a>
+          <a class="navbar-item" href="https://photoshape.github.io">
+            PhotoShape
+          </a>
+        </div>
+      </div> -->
+    <!-- </div>
+
+  </div>
+</nav> -->
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title" style="font-size: 2.5rem;">Hierarchical Adaptation Enables Robust Odometry Towards All-degraded Environments</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://shibowing.github.io">Shibo Zhao</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://github.com/StiphyJay">Sifan Zhou</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://www.ri.cmu.edu/ri-people/yuchen-zhang/">Yuchen Zhang</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://frc.ri.cmu.edu/~zhangji/">Ji Zhang</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://sairlab.org/chenw/">Chen Wang</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.ri.cmu.edu/ri-faculty/wenshan-wang/">Wenshan Wang</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.ri.cmu.edu/ri-faculty/sebastian-scherer/">Sebastian Scherer</a><sup>1</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Carnegie Mellon University,</span>
+            <span class="author-block"><sup>2</sup>University at Buffalo</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link.
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span> -->
+              <!-- Video Link. -->
+              <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=qvNUIT0R_HM"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/google/nerfies"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <!-- <span class="link-block">
+                <a href="https://github.com/google/nerfies/releases/tag/0.1"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a> -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/teaser.mp4"
+                type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+        <span class="dnerf">Nerfies</span> turns selfie videos from your phone into
+        free-viewpoint
+        portraits.
+      </h2>
+    </div>
+  </div>
+</section> -->
+
+
+<!-- <section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-steve">
+          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/steve.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/chair-tp.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-shiba">
+          <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/shiba.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-fullbody">
+          <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/fullbody.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-blueshirt">
+          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/blueshirt.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-mask">
+          <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/mask.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-coffee">
+          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/coffee.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-toby">
+          <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/toby2.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Robust odometry is essential for autonomous systems operating in complex and dynamic environments. 
+            Existing odometry systems often struggle with severe sensory degradations and extreme conditions such as smoke, 
+            sandstorms, snow, or low light, compromising both safety and functionality. To address these challenges, 
+            we present Super Odometry, a sensor fusion framework that dynamically adapts to varying levels of environmental degradation. 
+          </p>
+          <p>
+            Organized hierarchically from lower-level to higher-level adaptability, the framework integrates four modules: 
+            feature selection, state direction selection, engine selection, and a novel data-driven inertial odometry.
+            The inertial odometry, trained on over 100 hours of heterogeneous robotic platforms, captures comprehensive motion dynamics, 
+            providing a reliable fallback when exteroceptive sensors fail. 
+            Notably, Super Odometry elevates inertial measurement unit (IMU) to the same significance as camera and LiDAR within our sensor fusion 
+            framework, enabling independent inertial odometry to overcome extreme environments.
+          </p>
+          <p>
+            Super Odometry has been rigorously validated across 200 kilometers 
+            and 800 operational hours on a fleet of aerial, wheeled, and legged robots, under diverse sensor configurations, 
+            environmental conditions, and motion profiles. This work represents a significant advancement toward safe, 
+            autonomous navigation in all-degraded environments.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Paper video. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video2: Robust odometry across diverse conditions with various sensors and robots</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/qvNUIT0R_HM?list=PLosI3Br8CWkZlTRC8uIjTPo8onkRgswFe"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+    <!--/ Paper video. -->
+
+    <!-- Paper video. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video3: Evaluation of 13 types of degradation in a single run</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/8GMSLLNDnvs?list=PLosI3Br8CWkZlTRC8uIjTPo8onkRgswFe"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+    <!--/ Paper video. -->
+
+    <!-- Paper video. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video4: Adaptive State Direction in a Long Corridor Environments</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/Wfw755BuXjQ?list=PLosI3Br8CWkZlTRC8uIjTPo8onkRgswFe"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+    <!--/ Paper video. -->
+
+    <!-- Paper video. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video5: Performance of IMU Pretrained Model</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/nIKl8AXLblk"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          <!-- <iframe width="751" height="422" src="https://www.youtube.com/embed/nIKl8AXLblk" title="Movie S5: Performance of Pretrained IMU Model" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
+        </div>  
+      </div>
+    </div>
+    <!--/ Paper video. -->
+    <!-- Paper video. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video6: Robust Performance in Smoke Scenario</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/e5DSIfUQBeo?list=PLosI3Br8CWkZlTRC8uIjTPo8onkRgswFe"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+    <!--/ Paper video. -->
+
+    <!-- Paper video. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video7: Multi-Robot State Estimation in Challenging Environments</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/ENqY8wNZ5yw?list=PLosI3Br8CWkZlTRC8uIjTPo8onkRgswFe"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Learning-based IMU Odometry</h2>
+        <p>
+        Our IMU pre-trained model trained from large datasets and generalized across various robotics Platforms. 
+        Qualitative pose comparison shows our method (last column) achieves the highest accuracy against Ground Truth.
+        </p>
+      </div>
+    </div>
+  
+    <div class="columns is-centered" style="display: flex; justify-content: center;">
+      <div class="column is-half" style="display: flex; justify-content: center;">
+        <video controls style="max-width: 200%; height: auto; object-fit: contain;">
+          <source src="./static/videos/learning_imu_odometry_comparsion.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-full">
+        <!-- <h2 class="title is-3">Learning-based IMU Odometry Results</h2> -->
+        <p>
+          Detailed single trajectory comparision <b>Better to view each video in full screen.</b>
+        </p>
+      </div>
+    </div>
+    
+    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth" style="width: 100%;">
+      <thead>
+        <tr>
+          <th></th> <!-- Empty corner cell -->
+          <th>Car Expert Model (AI-IMU)</th>
+          <th>Dog Expert Model (RNIN-VIO)</th>
+          <th>Human Expert Model (TLIO)</th>
+          <th>Drone Expert Model (IMO)</th>
+          <th>IMU Pretrain Model (Our)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Row 1 with images -->
+        <tr>
+          <td>
+            <img src="./static/images/car_robot.png" alt="Image 1" style="width: 2500px; height: auto;">
+          </td>
+          <td>
+            <video id="matting-video-1" controls playsinline style="height: 100%;">
+              <source src="./static/videos/expert_car_4K.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td>
+            <video id="matting-video-4" controls playsinline style="height: 100%;">
+              <source src="./static/videos/dog_car_4K.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td>
+            <video id="matting-video-2" controls playsinline style="height: 100%;">
+              <source src="./static/videos/human_car_4K.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td>
+            <video id="matting-video-3" controls playsinline style="height: 100%;">
+              <source src="./static/videos/drone_car_4K.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td>
+            <video id="matting-video-5" controls playsinline style="height: 100%;">
+              <source src="./static/videos/FIMU_car_4K.mp4" type="video/mp4">
+            </video>
+          </td>
+        </tr>
+    
+        <!-- Row 2 -->
+        <tr>
+          <td>
+            <img src="./static/images/dog_robot.png" alt="Image 2" style="width: 3000px; height: auto;">
+          </td>
+          <td>
+            <video id="matting-video-6" controls playsinline style="height: 100%;">
+              <source src="./static/videos/car_dog_4K.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td>
+            <video id="matting-video-7" controls playsinline style="height: 100%;">
+              <source src="./static/videos/expert_dog_4K.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td>
+            <video id="matting-video-8" controls playsinline style="height: 100%;">
+              <source src="./static/videos/human_dog_4K.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td>
+            <video id="matting-video-9" controls playsinline style="height: 100%;">
+              <source src="./static/videos/drone_dog_4K.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td>
+            <video id="matting-video-10" controls playsinline style="height: 100%;">
+              <source src="./static/videos/FIMU_dog_4K.mp4" type="video/mp4">
+            </video>
+          </td>
+        </tr>
+    
+        <!-- Row 3 -->
+        <tr>
+          <td>
+            <img src="./static/images/human_robot.png" alt="Image 3" style="width: 3000px; height: auto;">
+          </td>
+          <td>
+            <video id="matting-video-11" controls playsinline style="height: 100%;">
+              <source src="./static/videos/car_human_4K.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td>
+            <video id="matting-video-12" controls playsinline style="height: 100%;">
+              <source src="./static/videos/dog_human_4K.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td>
+            <video id="matting-video-13" controls playsinline style="height: 100%;">
+              <source src="./static/videos/expert_human_4K.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td>
+            <video id="matting-video-14" controls playsinline style="height: 100%;">
+              <source src="./static/videos/drone_human_4K.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td>
+            <video id="matting-video-15" controls playsinline style="height: 100%;">
+              <source src="./static/videos/FIMU_human_4K.mp4" type="video/mp4">
+            </video>
+          </td>
+        </tr>
+    
+        <!-- Row 4 -->
+        <tr>
+          <td>
+            <img src="./static/images/drone_robot.png" alt="Image 4" style="width: 3000px; height: auto;">
+          </td>
+          <td>
+            <video id="matting-video-16" controls playsinline style="height: 100%;">
+              <source src="./static/videos/car_drone_4K.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td>
+            <video id="matting-video-17" controls playsinline style="height: 100%;">
+              <source src="./static/videos/dog_drone_4K.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td>
+            <video id="matting-video-18" controls playsinline style="height: 100%;">
+              <source src="./static/videos/human_drone_4K.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td>
+            <video id="matting-video-19" controls playsinline style="height: 100%;">
+              <source src="./static/videos/expert_drone_4K.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td>
+            <video id="matting-video-20" controls playsinline style="height: 100%;">
+              <source src="./static/videos/FIMU_drone_4K.mp4" type="video/mp4">
+            </video>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- <div class="hero-body">
+        <div class="container">
+            <div class="carousel-container">
+                <div id="results-carousel" class="carousel">
+                    <div class="item">
+                        <video muted="" loop="" playsinline="" controls="">
+                            <source src="./static/videos/human_drone_4K.mp4" type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
+                        <p class="item-description">Predict Alignment Risks✅</p>
+                    </div>
+                    <div class="item">
+                        <video muted="" loop="" playsinline="" controls="">
+                            <source src="./static/videos/expert_drone_4K.mp4" type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
+                        <p class="item-description">Real World Degraded Environment❓</p>
+                    </div>
+                    <div class="item">
+                        <video muted="" loop="" playsinline="" controls="">
+                            <source src="./static/videos/FIMU_drone_4K.mp4" type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
+                        <p class="item-description">ICP Failure under Degeneracy❓</p>
+                    </div>
+                </div>
+            </div>
+            <div class="drag-bar">
+                <div class="preview-container">
+                    <div class="preview-wrapper">
+                        <img src="img/superloc/preview3.png" alt="Preview 1" class="preview-image active" data-index="0" />
+                    </div>
+                    <div class="preview-wrapper">
+                        <img src="img/superloc/preview1.png" alt="Preview 2" class="preview-image" data-index="1" />
+                    </div>
+                    <div class="preview-wrapper">
+                        <img src="img/superloc/preview2.png" alt="Preview 3" class="preview-image" data-index="2" />
+                    </div>
+                </div>
+                <div class="drag-handle"></div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Animation. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">IMU Odometry Online Adaptation</h2>
+        <p>
+          Our learning-based IMU odometry an perform an online adaptation scheme, 
+          enabling it to adjust to novel environments continuously in a self-supervised manner with real-time refinement.
+          To the best of our knowledge, this is the first IMU-based estimator that demonstrates such a 
+          high level of generalization across diverse robot platforms, fast adaptation to unseen environments,
+          and real-time predictions with minimal drift.
+        </p>
+        </div>
+      </div>
+      
+      <div class="columns is-centered" style="display: flex; justify-content: center;">
+        <div class="column is-half" style="display: flex; justify-content: center;">
+          <img src="./static/images/animation.gif" alt="GIF 1" style="max-height: 300px; width: auto; object-fit: contain;">
+        </div>
+        <div class="column is-half" style="display: flex; justify-content: center;">
+          <img src="./static/images/Ate_curveV2.gif" alt="GIF 2" style="max-height: 500px; width: auto; object-fit: contain;">
+        </div>
+      </div>
+        <!-- <div class="columns is-vcentered interpolation-panel">
+          <div class="column is-3 has-text-centered">
+            <img src="./static/images/interpolate_start.jpg"
+                 class="interpolation-image"
+                 alt="Interpolate start reference image."/>
+            <p>Start Frame</p>
+          </div>
+          <div class="column interpolation-video-column">
+            <div id="interpolation-image-wrapper">
+              Loading...
+            </div>
+            <input class="slider is-fullwidth is-large is-info"
+                   id="interpolation-slider"
+                   step="1" min="0" max="100" value="0" type="range">
+          </div>
+          <div class="column is-3 has-text-centered">
+            <img src="./static/images/interpolate_end.jpg"
+                 class="interpolation-image"
+                 alt="Interpolation end reference image."/>
+            <p class="is-bold">End Frame</p>
+          </div>
+        </div>
+        <br/> -->
+        <!--/ Interpolating. -->
+
+        <!-- Re-rendering. -->
+        <!-- <h3 class="title is-4">Re-rendering the input video</h3>
+        <div class="content has-text-justified">
+          <p>
+            Using <span class="dnerf">Nerfies</span>, you can re-render a video from a novel
+            viewpoint such as a stabilized camera by playing back the training deformations.
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <video id="replay-video"
+                 controls
+                 muted
+                 preload
+                 playsinline
+                 width="75%">
+            <source src="./static/videos/replay.mp4"
+                    type="video/mp4">
+          </video>
+        </div> -->
+        <!--/ Re-rendering. -->
+
+      <!-- </div>
+    </div> -->
+    <!--/ Animation. -->
+
+
+    <!-- Concurrent Work. -->
+    <!-- <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Related Links</h2>
+
+        <div class="content has-text-justified">
+          <p>
+            There's a lot of excellent work that was introduced around the same time as ours.
+          </p>
+          <p>
+            <a href="https://arxiv.org/abs/2104.09125">Progressive Encoding for Neural Optimization</a> introduces an idea similar to our windowed position encoding for coarse-to-fine optimization.
+          </p>
+          <p>
+            <a href="https://www.albertpumarola.com/research/D-NeRF/index.html">D-NeRF</a> and <a href="https://gvv.mpi-inf.mpg.de/projects/nonrigid_nerf/">NR-NeRF</a>
+            both use deformation fields to model non-rigid scenes.
+          </p>
+          <p>
+            Some works model videos with a NeRF by directly modulating the density, such as <a href="https://video-nerf.github.io/">Video-NeRF</a>, <a href="https://www.cs.cornell.edu/~zl548/NSFF/">NSFF</a>, and <a href="https://neural-3d-video.github.io/">DyNeRF</a>
+          </p>
+          <p>
+            There are probably many more by the time you are reading this. Check out <a href="https://dellaert.github.io/NeRF/">Frank Dellart's survey on recent NeRF papers</a>, and <a href="https://github.com/yenchenlin/awesome-NeRF">Yen-Chen Lin's curated list of NeRF papers</a>.
+          </p>
+        </div>
+      </div>
+    </div> -->
+    <!--/ Concurrent Work. -->
+
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{zhao2024Hero,
+  author    = {Shibo Zhao, Sifan Zhou, Yuchen Zhang, Ji Zhang, Chen Wang, Wenshan Wang and Sebastian Scherer},
+  title     = {Hierarchical Adaptation Enables Robust Odometry Towards All-degraded Environments},
+  year      = {2024},
+}</code></pre>
+  </div>
+</section>
+  <!-- journal   = {ICCV}, -->
+
+<!-- <footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/videos/nerfies_paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow the <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
+            we just ask that you link back to this page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer> -->
+
+</body>
+</html>
